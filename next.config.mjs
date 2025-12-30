@@ -1,7 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
-  turbopack: {},
+ experimental: {
+    turbo: {
+      loaders: {
+        ".glsl": ["text"],
+        ".vert": ["text"],
+        ".frag": ["text"]
+      }
+    }
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.(glsl|vs|fs|vert|frag)$/i,
