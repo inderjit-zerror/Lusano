@@ -1,7 +1,6 @@
 import { useThree } from '@react-three/fiber'
 import React, { useMemo } from 'react'
-import BgVertex from '@/shaders/BgVertex.glsl'
-import BgFragment from '@/shaders/BgFragment.glsl'
+import {Vertex , Fragment} from '@/shaders/BGSHADER'
 import * as THREE from 'three';
 
 const BgSection = () => {
@@ -17,8 +16,8 @@ const BgSection = () => {
     <mesh>
         <planeGeometry args={[viewport.width, viewport.height]} />
         <shaderMaterial
-         vertexShader={BgVertex}
-         fragmentShader={BgFragment}
+         vertexShader={Vertex}
+         fragmentShader={Fragment}
          uniforms={uniforms}
         />
     </mesh>
