@@ -1,4 +1,4 @@
-const Vertex = `
+export const Vertex = `
 precision mediump float;
 
 varying vec2 vUv;
@@ -33,7 +33,7 @@ void main() {
 `;
 
 
-const Fragment = `
+export const Fragment = `
 precision mediump float;
 varying vec2 vUv;
 
