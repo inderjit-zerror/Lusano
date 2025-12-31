@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { BsPlusLg } from "react-icons/bs";
 
-const PageIntro = () => {
+const PageIntro = ({CName}) => {
   const svgRef = useRef();
   const numRef = useRef(null);
   const midRef = useRef(null);
@@ -206,9 +206,10 @@ const PageIntro = () => {
     <div className="w-full h-screen flex flex-col absolute top-0 left-0 z-80 justify-center items-center pointer-events-none">
       <div
         ref={plusRef}
-        className="plus flex justify-center items-center fixed top-0 left-0 mix-blend-difference"
+        className="plus flex justify-center items-center fixed top-0 left-0 mix-blend-difference flex-col gap-[4px]"
       >
         <BsPlusLg className="text-[#B6A69E] text-[18px]" />
+        <p className="Font2 text-[#3d322c] ">{CName}</p>
       </div>
 
       {/* Mid */}
