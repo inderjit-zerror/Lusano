@@ -2,7 +2,7 @@ import React from "react";
 
 const TextHeader = () => {
   return (
-    <div className="w-full flex TextHeaderCont opacity-0 items-center absolute bottom-2 left-0 justify-between px-10 py-6 z-100">
+    <div className="w-full flex TextHeaderCont opacity-0 items-center fixed bottom-2 left-0 justify-between px-10 py-6 z-100">
 
       {/* Left — 50% */}
       <div className="text-[#5a3823] text-[18px] font-serif">

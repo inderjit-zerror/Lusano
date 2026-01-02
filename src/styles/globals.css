@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family:Font1;
+  src: url('/fonts/font1.woff2');
+}
+
+@font-face {
+  font-family:Font2;
+  src: url('/fonts/font2.woff2');
+}
+
+body {
+  background-color: #F7F4EF;
+  font-family: Helvetica;
+}
+
+.Font1{
+  font-family:Font1;
+}
+
+.Font2{
+  font-family:Font2;
+}
+
+/* page transition */
+/* OLD PAGE */
+::view-transition-old(root) {
+  animation: scaleOut 600ms cubic-bezier(0.76, 0, 0.24, 1) both;
+  transform-origin: center;
+}
+
+/* NEW PAGE */
+::view-transition-new(root) {
+  animation: slideFromTop 600ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+/* OLD PAGE SCALE */
+@keyframes scaleOut {
+  to {
+    transform: scale(0.8);
+  }
+}
+
+/* NEW PAGE SLIDE */
+@keyframes slideFromTop {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}

@@ -13,7 +13,7 @@ const NavBox = () => {
     tl.current = gsap
       .timeline({ paused: true })
       .to(boxRef.current, {
-        height: 280,
+        height: 270,
         duration: 0.5,
         ease: "ease.in",
       })
@@ -42,7 +42,7 @@ const NavBox = () => {
     <div
       onMouseEnter={NavActivate}
       onMouseLeave={NavDeActivate}
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] cursor-pointer NBOX opacity-0"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-100 cursor-pointer NBOX opacity-0 text-[14px]"
     >
       <div
         ref={boxRef}

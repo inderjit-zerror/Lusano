@@ -1,6 +1,6 @@
 import { useThree } from "@react-three/fiber";
 import React, { useEffect, useMemo, useRef } from "react";
-import {Vertex ,Fragment } from "@/shaders/FRAGVERT";
+import {Vertex ,Fragment } from "@/components/shaders/FRAGVERT";
 import gsap from "gsap";
 import * as THREE from "three";
 

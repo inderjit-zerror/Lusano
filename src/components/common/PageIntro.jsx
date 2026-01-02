@@ -203,7 +203,7 @@ const PageIntro = ({CName}) => {
   }, []);
 
   return (
-    <div className="w-full h-screen flex flex-col absolute top-0 left-0 z-80 justify-center items-center pointer-events-none">
+    <div className="w-full h-screen flex flex-col fixed top-0 left-0 z-80 justify-center items-center pointer-events-none">
       <div
         ref={plusRef}
         className="plus flex justify-center items-center fixed top-0 left-0 mix-blend-difference flex-col gap-[4px]"

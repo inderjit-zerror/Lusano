@@ -1,6 +1,6 @@
 import { useThree } from '@react-three/fiber'
 import React, { useMemo } from 'react'
-import {Vertex , Fragment} from '@/shaders/BGSHADER'
+import {Vertex , Fragment} from '@/components/shaders/BGSHADER'
 import * as THREE from 'three';
 
 const BgSection = () => {

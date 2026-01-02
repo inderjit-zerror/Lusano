@@ -6,6 +6,7 @@ import { PerspectiveCamera } from "@react-three/drei";
 import gsap from "gsap";
 import BgSection from "./BgSection";
 import NavBox from "./common/NavBox";
+import { Link } from "next-view-transitions";
 
 const CanvasComp = ({ SetCName }) => {
   const distance = 200;
@@ -173,9 +174,9 @@ const CanvasComp = ({ SetCName }) => {
   const DivMouseEnter = (item) => {
     SetCName("Image Name");
     gsap.to(item, {
-      scale: 1.3,
+      scale: 1.4,
       direction: 0.5,
-      ease: "ease.in",
+      ease: "ease.out",
     });
   };
   const DivMouseLeave = (item) => {
@@ -183,7 +184,7 @@ const CanvasComp = ({ SetCName }) => {
     gsap.to(item, {
       scale: 1,
       direction: 0.5,
-      ease: "ease.in",
+      ease: "ease.out",
     });
   };
 
@@ -231,10 +232,12 @@ const CanvasComp = ({ SetCName }) => {
                 className={`aspect-square grid-cell opacity-0  div${i} overflow-hidden ${imgIndex}`}
               >
                 {imgIndex !== -1 && (
+                  <Link href="/project/name"> 
                   <img
                     src={images[imgIndex]}
                     className="w-full h-full object-cover"
                   />
+                  </Link>
                 )}
               </div>
             );
