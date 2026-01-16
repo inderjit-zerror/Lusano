@@ -51,3 +51,30 @@ body {
     transform: translateY(0%);
   }
 }
+
+
+
+/* .preAnimateDiv18{
+  transform: translateX(110%) translateY(230%);
+}
+.preAnimateDiv19{
+  transform: translateX(-340%)  translateY(230%);
+}
+.preAnimateDiv21{
+  transform: translateX(350%)  translateY(115%);
+}
+.preAnimateDiv28{
+  transform: translateX(230%)  translateY(-115%);
+}
+.preAnimateDiv22{
+  transform: translateX(-230%)  translateY(115%);
+}
+.preAnimateDiv26{
+  transform: translateX(-460%)  translateY(-5%);
+}
+.preAnimateDiv29{
+  transform: translateX(-230%)  translateY(-115%);
+}
+.preAnimateDiv32{
+  transform: translateX(-115%)  translateY(-225%);
+} */

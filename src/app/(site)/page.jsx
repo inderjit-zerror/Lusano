@@ -15,9 +15,8 @@ export default function Home() {
   return (
    <>
     <div className="w-full min-h-screen relative ">
-      <PageIntro CName={CName} />
+      <PageIntro CName={CName} />  
       <CanvasComp SetCName={SetCName} />
-      {/* <Nav/>  */}
       <TextHeader />
      
     </div>

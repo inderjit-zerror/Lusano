@@ -42,7 +42,7 @@ const CanvasComp = ({ SetCName }) => {
       opacity: 1,
       stagger: 0.0002,
       ease: "ease.Out",
-    });
+    },'a1');
 
     tlS.to(".SempleIMGdiv", {
       opacity: 1,
@@ -52,6 +52,59 @@ const CanvasComp = ({ SetCName }) => {
       duration: 1,
       ease: "power4.inOut",
     });
+    // tlS.from('.preAnimateDiv18',{
+    //   xPercent:110,
+    //   yPercent:230,
+    // },'a1')
+    // tlS.from('.preAnimateDiv19',{
+    //   xPercent:-340,
+    //   yPercent:230,
+    // },'a1')
+    // tlS.from('.preAnimateDiv21',{
+    //   xPercent:350,
+    //   yPercent:115,
+    // },'a1')
+    // tlS.from('.preAnimateDiv28',{
+    //   xPercent:230,
+    //   yPercent:-115,
+    // },'a1')
+    // tlS.from('.preAnimateDiv22',{
+    //   xPercent:-230,
+    //   yPercent:115,
+    // },'a1')
+    // tlS.from('.preAnimateDiv26',{
+    //   xPercent:-460,
+    //   yPercent:-5,
+    // },'a1')
+    // tlS.from('.preAnimateDiv29',{
+    //   xPercent:-230,
+    //   yPercent:-115,
+    // },'a1')
+    // tlS.from('.preAnimateDiv32',{
+    //   xPercent:-115,
+    //   yPercent:-225,
+    // },'a1')
+    tlS.from(
+  [
+    '.preAnimateDiv18',
+    '.preAnimateDiv19',
+    '.preAnimateDiv21',
+    '.preAnimateDiv28',
+    '.preAnimateDiv22',
+    '.preAnimateDiv26',
+    '.preAnimateDiv29',
+    '.preAnimateDiv32',
+  ],
+  {
+    xPercent: (i) => [110, -340, 350, 230, -230, -460, -230, -115][i],
+    yPercent: (i) => [230, 230, 115, -115, 115, -5, -115, -225][i],
+    duration: 0.8,
+    ease: "power3.out",
+    stagger: 0.15, // 👈 one by one
+  },
+  'a1'
+);
+
 
     tlS.to(".SempleIMGdiv", {
       opacity: 0,
@@ -125,7 +178,7 @@ const CanvasComp = ({ SetCName }) => {
 
   // ------------------------------------------------------
   const gridRef = useRef(null);
-  // ------------------- Smooth Mouse Tracking -------------------
+  // ------------------- Smooth Mouse Tracking ------------------- TRUE
 
   const startMouseTracking = () => {
     const grid = gridRef.current;
@@ -170,7 +223,7 @@ const CanvasComp = ({ SetCName }) => {
     window.addEventListener("mousemove", onMouseMove);
   };
 
-  //  -----------------------------------------------------------------------
+  //  ----------------------------------------------------------------------- TRUE
   const DivMouseEnter = (item) => {
     SetCName("Image Name");
     gsap.to(item, {
@@ -229,11 +282,12 @@ const CanvasComp = ({ SetCName }) => {
                 onMouseLeave={
                   hasImage ? () => DivMouseLeave(`.div${i}`) : undefined
                 }
-                className={`aspect-square grid-cell opacity-0  div${i} overflow-hidden ${imgIndex}`}
+                className={`aspect-square grid-cell opacity-0   div${i} preAnimateDiv${imgIndex}   overflow-hidden ${imgIndex}`}
               >
                 {imgIndex !== -1 && (
                   <Link href="/project/name"> 
                   <img
+                    // onClick={()=> console.log(imgIndex)}
                     src={images[imgIndex]}
                     className="w-full h-full object-cover"
                   />
