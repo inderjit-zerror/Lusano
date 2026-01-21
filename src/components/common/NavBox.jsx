@@ -7,13 +7,13 @@ import { FiMenu } from "react-icons/fi";
 const NavBox = () => {
   const boxRef = useRef(null);
   const tl = useRef(null);
-    const [isOpen, setIsOpen] = useState(false); // <-- ICON CONTROL
+  const [isOpen, setIsOpen] = useState(false); // <-- ICON CONTROL
 
   useLayoutEffect(() => {
     tl.current = gsap
       .timeline({ paused: true })
       .to(boxRef.current, {
-        height: 270,
+        height: 245,
         duration: 0.5,
         ease: "ease.in",
       })
@@ -24,7 +24,7 @@ const NavBox = () => {
           duration: 0.5,
           ease: "power2.inOut",
         },
-        "<"
+        "<",
       );
   }, []);
 
@@ -42,23 +42,39 @@ const NavBox = () => {
     <div
       onMouseEnter={NavActivate}
       onMouseLeave={NavDeActivate}
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-100 cursor-pointer NBOX opacity-0 text-[14px]"
+      className="fixed top-4  left-1/2 -translate-x-1/2 z-100 cursor-pointer NBOX opacity-0 text-[14px]"
     >
       <div
         ref={boxRef}
         className="w-[260px] overflow-hidden bg-white/40 backdrop-blur-xl border border-white/30 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.15)]"
-        style={{ height: 45 }} // <-- controlled by GSAP
+        style={{ height: 35 }} // <-- controlled by GSAP
       >
-        {/* Top Row */}
-        <div className="flex items-center justify-between mb-4 py-2 px-2">
-              {/* ICON SWITCH */}
+        {/* Top Row PC/Laptop */}
+        <div className="flex items-center max-sm:hidden justify-between mb-4 py-2 px-2">
+          {/* ICON SWITCH */}
           {isOpen ? (
-            <RxCross2 className="text-[20px] text-[#5a3823]" />
+            <RxCross2 className="text-[14px] text-[#5a3823]" />
           ) : (
-            <FiMenu className="text-[20px] text-[#5a3823]" />
+            <FiMenu className="text-[14px] text-[#5a3823]" />
           )}
-          <p className="text-lg font-medium text-[#5a3823] Font1">Home</p>
+          <p className="text-sm font-medium text-[#5a3823] Font1">Home</p>
           <div className="w-[20px]"></div>
+        </div>
+
+        {/* Top Row Mobile */}
+        <div className="flex items-center sm:hidden items-center justify-between mb-4 py-2 px-4">
+
+          <p className="text-sm font-medium text-[#5a3823] Font3"> ZERROR</p>
+          <div className="flex justify-center items-center gap-2">
+            <p className="text-sm font-medium text-[#5a3823] Font1">Home</p>
+            {/* ICON SWITCH */}
+            {isOpen ? (
+              <RxCross2 className="text-[14px] text-[#5a3823]" />
+            ) : (
+              <FiMenu className="text-[14px] text-[#5a3823]" />
+            )}
+            {/* <div className="w-[20px]"></div> */}
+          </div>
         </div>
 
         {/* Menu Items */}
@@ -71,10 +87,13 @@ const NavBox = () => {
           ].map((item, i) => (
             <div
               key={i}
-              className="border-b TT opacity-0 border-[#5a3823]/40 pb-2 group"
+              className="border-b TT opacity-0 border-[#5a3823]/40 pb-1 group"
             >
               <p className="font-serif italic text-[#5a3823] ">
-                <span className="font-medium transition-all ease-in duration-200  group-hover:mr-[10px]">({item.num})</span> {item.label}
+                <span className="font-medium text-sm transition-all ease-in duration-200  group-hover:mr-[10px]">
+                  ({item.num})
+                </span>{" "}
+                {item.label}
               </p>
             </div>
           ))}

@@ -20,7 +20,7 @@ const Nav = () => {
   }, []);
 
   return (
-    <div className='w-full h-fit fixed top-0 left-0 flex z-50 px-7 py-6 justify-between'>
+    <div className='w-full h-fit fixed top-0 left-0 flex z-50 px-7 py-6 justify-between max-lg:hidden'>
         <p className='Font2 text-[#4A2214] text-[1.2rem]'>Zerror Studio</p>
         <p className='Font2 text-[#4A2214] text-[1.2rem]'><span className="text-[#B4A49B] mr-3">{time}</span>Mumbai</p>
     </div>

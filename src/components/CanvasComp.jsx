@@ -15,7 +15,7 @@ const CanvasComp = ({ SetCName }) => {
   useEffect(() => {
     const FovCalculator = () => {
       setfov(
-        2 * Math.atan(window.innerHeight / 2 / distance) * (180 / Math.PI)
+        2 * Math.atan(window.innerHeight / 2 / distance) * (180 / Math.PI),
       );
     };
 
@@ -38,11 +38,15 @@ const CanvasComp = ({ SetCName }) => {
 
     const cellRect = targetCell.getBoundingClientRect();
 
-    tlS.to(".grid-cell", {
-      opacity: 1,
-      stagger: 0.0002,
-      ease: "ease.Out",
-    },'a1');
+    tlS.to(
+      ".grid-cell",
+      {
+        opacity: 1,
+        stagger: 0.0002,
+        ease: "ease.Out",
+      },
+      "a1",
+    );
 
     tlS.to(".SempleIMGdiv", {
       opacity: 1,
@@ -52,73 +56,80 @@ const CanvasComp = ({ SetCName }) => {
       duration: 1,
       ease: "power4.inOut",
     });
-    // tlS.from('.preAnimateDiv18',{
-    //   xPercent:110,
-    //   yPercent:230,
-    // },'a1')
-    // tlS.from('.preAnimateDiv19',{
-    //   xPercent:-340,
-    //   yPercent:230,
-    // },'a1')
-    // tlS.from('.preAnimateDiv21',{
-    //   xPercent:350,
-    //   yPercent:115,
-    // },'a1')
-    // tlS.from('.preAnimateDiv28',{
-    //   xPercent:230,
-    //   yPercent:-115,
-    // },'a1')
-    // tlS.from('.preAnimateDiv22',{
-    //   xPercent:-230,
-    //   yPercent:115,
-    // },'a1')
-    // tlS.from('.preAnimateDiv26',{
-    //   xPercent:-460,
-    //   yPercent:-5,
-    // },'a1')
-    // tlS.from('.preAnimateDiv29',{
-    //   xPercent:-230,
-    //   yPercent:-115,
-    // },'a1')
-    // tlS.from('.preAnimateDiv32',{
-    //   xPercent:-115,
-    //   yPercent:-225,
-    // },'a1')
-    tlS.from(
-  [
-    '.preAnimateDiv18',
-    '.preAnimateDiv19',
-    '.preAnimateDiv21',
-    '.preAnimateDiv28',
-    '.preAnimateDiv22',
-    '.preAnimateDiv26',
-    '.preAnimateDiv29',
-    '.preAnimateDiv32',
-  ],
-  {
-    xPercent: (i) => [110, -340, 350, 230, -230, -460, -230, -115][i],
-    yPercent: (i) => [230, 230, 115, -115, 115, -5, -115, -225][i],
-    duration: 0.8,
-    ease: "power3.out",
-    stagger: 0.15, // 👈 one by one
-  },
-  'a1'
-);
+    
 
+    //////////////////////////////////////////
+    // tlS.from(
+    //   [
+    //     ".preAnimateDiv18",
+    //     ".preAnimateDiv19",
+    //     ".preAnimateDiv21",
+    //     ".preAnimateDiv28",
+    //     ".preAnimateDiv22",
+    //     ".preAnimateDiv26",
+    //     ".preAnimateDiv29",
+    //     ".preAnimateDiv32",
+    //   ],
+    //   {
+    //     xPercent: (i) => [110, -340, 350, 230, -230, -460, -230, -115][i],
+    //     yPercent: (i) => [230, 230, 115, -115, 115, -5, -115, -225][i],
+    //     duration: 0.8,
+    //     ease: "power3.out",
+    //     stagger: 0.15, // 👈 one by one
+    //   },
+    //   "a1",
+    // );
+    tlS.fromTo(
+      [
+        ".preAnimateDiv18",
+        ".preAnimateDiv19",
+        ".preAnimateDiv21",
+        ".preAnimateDiv28",
+        ".preAnimateDiv22",
+        ".preAnimateDiv26",
+        ".preAnimateDiv29",
+        ".preAnimateDiv32",
+      ],
+      {
+        xPercent: (i) => [110, -340, 350, 230, -230, -460, -230, -115][i],
+        yPercent: (i) => [230, 230, 115, -115, 115, -5, -115, -225][i],
+        opacity: 0,
+        scale: 0.9,
+      },
+      {
+        xPercent: 0,
+        yPercent: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: 0.15,
+        clearProps: "transform", // 👈 optional but clean
+      },
+      "a1",
+    );
 
     tlS.to(".SempleIMGdiv", {
       opacity: 0,
       ease: "ease.Out",
-      onComplete:()=>{
+      onComplete: () => {
         const smallTL = gsap.timeline();
-        smallTL.to('.NBOX',{
-          opacity:1,
-        },'S1')
-        smallTL.to('.TextHeaderCont',{
-          opacity:1,
-        },'S1')
-        startMouseTracking()
-      }
+        smallTL.to(
+          ".NBOX",
+          {
+            opacity: 1,
+          },
+          "S1",
+        );
+        smallTL.to(
+          ".TextHeaderCont",
+          {
+            opacity: 1,
+          },
+          "S1",
+        );
+        startMouseTracking();
+      },
     });
   }, []);
 
@@ -223,6 +234,7 @@ const CanvasComp = ({ SetCName }) => {
     window.addEventListener("mousemove", onMouseMove);
   };
 
+  
   //  ----------------------------------------------------------------------- TRUE
   const DivMouseEnter = (item) => {
     SetCName("Image Name");
@@ -245,9 +257,6 @@ const CanvasComp = ({ SetCName }) => {
 
   return (
     <div className="w-full h-screen fixed top-0 left-0 z-40">
-
-    
-
       <Canvas className="w-full h-full " gl={{ antialias: false }} dpr={[1, 1]}>
         <PerspectiveCamera makeDefault fov={fov} position={[0, 0, distance]} />
         <BgSection />
@@ -256,7 +265,7 @@ const CanvasComp = ({ SetCName }) => {
 
       {/* Top Layer */}
       <div className="w-full h-screen fixed top-0 left-0 z-80 overflow-hidden  flex justify-center items-center">
-        <div className="w-[400px] h-[450px] z-100 SempleIMGdiv overflow-hidden pointer-events-none opacity-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
+        <div className="w-[400px] h-[450px] max-lg:w-[250px] max-lg:h-[300px] z-100 SempleIMGdiv overflow-hidden pointer-events-none opacity-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
           <img
             src={`/productImg/img10.jpg`}
             alt="P"
@@ -267,7 +276,7 @@ const CanvasComp = ({ SetCName }) => {
         {/* --- PERFECT SQUARE GRID 12x12 --- */}
         <div
           ref={gridRef}
-          className="w-[200vw] aspect-square grid grid-cols-15  mx-auto shrink-0 gap-[2rem] select-none"
+          className="w-[200vw] max-sm:w-[600vw] aspect-square grid grid-cols-15  mx-auto shrink-0 gap-[2rem] select-none"
         >
           {Array.from({ length: 15 * 15 }).map((_, i) => {
             const imgIndex = imagePositions.indexOf(i);
@@ -285,12 +294,12 @@ const CanvasComp = ({ SetCName }) => {
                 className={`aspect-square grid-cell opacity-0   div${i} preAnimateDiv${imgIndex}   overflow-hidden ${imgIndex}`}
               >
                 {imgIndex !== -1 && (
-                  <Link href="/project/name"> 
-                  <img
-                    // onClick={()=> console.log(imgIndex)}
-                    src={images[imgIndex]}
-                    className="w-full h-full object-cover"
-                  />
+                  <Link href="/project/name">
+                    <img
+                      // onClick={()=> console.log(imgIndex)}
+                      src={images[imgIndex]}
+                      className="w-full h-full object-cover"
+                    />
                   </Link>
                 )}
               </div>

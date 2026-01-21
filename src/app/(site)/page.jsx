@@ -18,7 +18,6 @@ export default function Home() {
       <PageIntro CName={CName} />  
       <CanvasComp SetCName={SetCName} />
       <TextHeader />
-     
     </div>
    </>
   );

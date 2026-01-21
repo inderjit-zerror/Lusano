@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { BsPlusLg } from "react-icons/bs";
 
-const PageIntro = ({CName}) => {
+const PageIntro = ({ CName }) => {
   const svgRef = useRef();
   const numRef = useRef(null);
   const midRef = useRef(null);
@@ -31,7 +31,7 @@ const PageIntro = ({CName}) => {
           duration: 0.8,
           ease: "power2.out",
         },
-        "px1"
+        "px1",
       );
 
       // Animate fill after stroke
@@ -43,7 +43,7 @@ const PageIntro = ({CName}) => {
           delay: 0.9,
           ease: "power1.out",
         },
-        "px1"
+        "px1",
       );
 
       tl1.to(
@@ -54,7 +54,7 @@ const PageIntro = ({CName}) => {
           delay: 0.9,
           ease: "ease.in",
         },
-        "px1"
+        "px1",
       );
     });
 
@@ -66,7 +66,7 @@ const PageIntro = ({CName}) => {
         delay: 0.9,
         ease: "ease.in",
       },
-      "px1"
+      "px1",
     );
     tl1.to(
       ".Text_animater_1",
@@ -76,7 +76,7 @@ const PageIntro = ({CName}) => {
         direction: 2,
         ease: "ease.in",
       },
-      "pt1"
+      "pt1",
     );
     tl1.to(
       svgRef.current,
@@ -86,7 +86,7 @@ const PageIntro = ({CName}) => {
         direction: 2,
         ease: "ease.in",
       },
-      "pt1"
+      "pt1",
     );
 
     const counter = { value: 0 };
@@ -111,7 +111,7 @@ const PageIntro = ({CName}) => {
         direction: 2,
         ease: "ease.in",
       },
-      "pt1"
+      "pt1",
     );
   }, []);
 
