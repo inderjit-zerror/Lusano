@@ -38,7 +38,7 @@ const PageIntro = ({ CName }) => {
       tl1.to(
         p,
         {
-          fill: "#ffff", // your fill color
+          fill: "#ffff",
           duration: 0.3,
           delay: 0.9,
           ease: "power1.out",
@@ -161,52 +161,89 @@ const PageIntro = ({ CName }) => {
   }, []);
 
   // Plus Move
+  // useEffect(() => {
+
+  //   const plus = plusRef.current;
+  //   let target = { x: 0, y: 0 };
+  //   let current = { x: 0, y: 0 };
+  //   const speed = 0.15;
+
+  //   const followMouse = () => {
+  //     current.x += (target.x - current.x) * speed;
+  //     current.y += (target.y - current.y) * speed;
+
+  //     gsap.to(plus, {
+  //       x: current.x,
+  //       y: current.y,
+  //       duration: 0.15,
+  //       ease: "power3.out",
+  //     });
+
+  //     requestAnimationFrame(followMouse);
+  //   };
+
+  //   followMouse();
+
+  //   const handleMove = (e) => {
+  //     const rect = plus.getBoundingClientRect();
+
+  //     // Always center dynamically
+  //     const halfW = rect.width / 2;
+  //     const halfH = rect.height / 2;
+
+  //     target.x = e.clientX - halfW;
+  //     target.y = e.clientY - halfH;
+  //   };
+
+  //   window.addEventListener("mousemove", handleMove);
+
+  //   return () => {
+  //     window.removeEventListener("mousemove", handleMove);
+  //   };
+  // }, []);
   useEffect(() => {
-    const plus = plusRef.current;
+  const plus = plusRef.current;
+  if (!plus) return;
 
-    let target = { x: 0, y: 0 };
-    let current = { x: 0, y: 0 };
-    const speed = 0.15;
+  let target = { x: 0, y: 0 };
+  let current = { x: 0, y: 0 };
+  const speed = 0.15;
+  let rafId;
 
-    const followMouse = () => {
-      current.x += (target.x - current.x) * speed;
-      current.y += (target.y - current.y) * speed;
+  const followMouse = () => {
+    current.x += (target.x - current.x) * speed;
+    current.y += (target.y - current.y) * speed;
 
-      gsap.to(plus, {
-        x: current.x,
-        y: current.y,
-        duration: 0.15,
-        ease: "power3.out",
-      });
+    gsap.set(plus, {
+      x: current.x,
+      y: current.y,
+    });
 
-      requestAnimationFrame(followMouse);
-    };
+    rafId = requestAnimationFrame(followMouse);
+  };
 
-    followMouse();
+  const handleMove = (e) => {
+    const rect = plus.getBoundingClientRect();
+    target.x = e.clientX - rect.width / 2;
+    target.y = e.clientY - rect.height / 2;
+  };
 
-    const handleMove = (e) => {
-      const rect = plus.getBoundingClientRect();
+  window.addEventListener("mousemove", handleMove);
+  followMouse();
 
-      // Always center dynamically
-      const halfW = rect.width / 2;
-      const halfH = rect.height / 2;
+  return () => {
+    window.removeEventListener("mousemove", handleMove);
+    cancelAnimationFrame(rafId);       // 🔥 VERY IMPORTANT
+    gsap.killTweensOf(plus);           // 🔥 cleanup GSAP
+  };
+}, []);
 
-      target.x = e.clientX - halfW;
-      target.y = e.clientY - halfH;
-    };
-
-    window.addEventListener("mousemove", handleMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-    };
-  }, []);
 
   return (
     <div className="w-full h-screen flex flex-col fixed top-0 left-0 z-80 justify-center items-center pointer-events-none">
       <div
         ref={plusRef}
-        className="plus flex justify-center items-center fixed top-0 left-0 mix-blend-difference flex-col gap-[4px]"
+        className="plus flex justify-center max-sm:hidden items-center fixed top-0 left-0 mix-blend-difference flex-col gap-[4px]"
       >
         <BsPlusLg className="text-[#B6A69E] text-[18px]" />
         <p className="Font2 text-[#3d322c] ">{CName}</p>

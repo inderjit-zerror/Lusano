@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ProductIntroR = ({ numberRef }) => {
   return (
-    <div className="w-1/4.1 h-screen  absolute flex flex-col justify-end items-end top-0 right-0 bg-[#f8f5f1] text-[#5a3823] px-8 py-10 font-serif">
+    <div className="w-1/4.1 h-screen opacity-0 PCRight  absolute flex flex-col justify-end items-end top-0 right-0 bg-[#f8f5f1] text-[#5a3823] px-8 py-10 font-serif">
       {/* Page Index Right */}
       <div className="absolute top-20 right-10 text-xs tracking-wider text-gray-500">
         001 - 004
@@ -69,7 +69,7 @@ const ProductIntroR = ({ numberRef }) => {
 
 const ProductDetailsL = () => {
   return (
-    <div className="w-1/5 h-screen  text-[#5a3823] px-10 pb-12 pt-20 font-serif absolute top-0 left-0">
+    <div className="w-1/5 h-screen  text-[#5a3823] opacity-0 PCLeft px-10 pb-12 pt-20 font-serif absolute top-0 left-0">
       {/* Close Button */}
       <Link href={'/'}><button className="underline text-sm tracking-wide">Close</button></Link>
 
@@ -135,8 +135,8 @@ const OpeningSection = () => {
   useEffect(() => {
     if (window.innerWidth > 760) {
       SetIsMobile(false);
-      gsap.to('.PC_OpenContent',{
-        opacity:1
+      gsap.to('.PC_OpenContent', {
+        opacity: 1
       })
     } else {
       SetIsMobile(true);
@@ -193,6 +193,38 @@ const OpeningSection = () => {
     });
   }, []);
 
+  // PCRight
+
+  useEffect(() => {
+    gsap.fromTo(
+      ".PCRight, .PCLeft",          // target
+      {
+        opacity: 0,
+        y: 25
+      },
+      {
+        delay: 2,
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power4.out"
+      });
+
+    gsap.fromTo(
+      ".Center",          // target
+      {
+        opacity: 0,
+        y: 25
+      },
+      {
+        delay: 1.5,
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "none"
+      });
+  }, [])
+
   return (
     <>
       {isMobile == false ? (
@@ -206,7 +238,7 @@ const OpeningSection = () => {
                 className="w-full h-fit flex flex-col gap-[20px]"
               >
                 {/* Img1 */}
-                <div className="w-full h-[80vh] overflow-hidden flex  img-block">
+                <div className="w-full Center  opacity-0 h-[80vh] overflow-hidden flex  img-block">
                   <img
                     src={`/productImg/img10.jpg`}
                     alt="P-IMG"
@@ -214,7 +246,7 @@ const OpeningSection = () => {
                   />
                 </div>
                 {/* Img2 */}
-                <div className="w-full h-[80vh] overflow-hidden flex  img-block">
+                <div className="w-full Center opacity-0  h-[80vh] overflow-hidden flex  img-block">
                   <img
                     src={`/productImg/img15.jpg`}
                     alt="P-IMG"
@@ -222,7 +254,7 @@ const OpeningSection = () => {
                   />
                 </div>
                 {/* Img3 */}
-                <div className="w-full h-[80vh] overflow-hidden flex  img-block">
+                <div className="w-full Center opacity-0  h-[80vh] overflow-hidden flex  img-block">
                   <img
                     src={`/productImg/img1.jpg`}
                     alt="P-IMG"

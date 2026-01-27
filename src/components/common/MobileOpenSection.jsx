@@ -9,6 +9,7 @@ const MobileOpenSection = () => {
       ".animateDiv1",
       {
         height: 0,
+        delay:1.5,
         duration: 1,
         ease: "power3.inOut",
       },
@@ -22,6 +23,7 @@ const MobileOpenSection = () => {
       },
       {
         y: 0,
+        delay:1.5,
         opacity: 1,
         ease: "power3.inOut",
         duration: 1,

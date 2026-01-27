@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
 import gsap from "gsap";
 import BgSection from "./BgSection";
-import NavBox from "./common/NavBox";
 import { Link } from "next-view-transitions";
 
 const CanvasComp = ({ SetCName }) => {
@@ -56,29 +55,7 @@ const CanvasComp = ({ SetCName }) => {
       duration: 1,
       ease: "power4.inOut",
     });
-    
 
-    //////////////////////////////////////////
-    // tlS.from(
-    //   [
-    //     ".preAnimateDiv18",
-    //     ".preAnimateDiv19",
-    //     ".preAnimateDiv21",
-    //     ".preAnimateDiv28",
-    //     ".preAnimateDiv22",
-    //     ".preAnimateDiv26",
-    //     ".preAnimateDiv29",
-    //     ".preAnimateDiv32",
-    //   ],
-    //   {
-    //     xPercent: (i) => [110, -340, 350, 230, -230, -460, -230, -115][i],
-    //     yPercent: (i) => [230, 230, 115, -115, 115, -5, -115, -225][i],
-    //     duration: 0.8,
-    //     ease: "power3.out",
-    //     stagger: 0.15, // 👈 one by one
-    //   },
-    //   "a1",
-    // );
     tlS.fromTo(
       [
         ".preAnimateDiv18",
@@ -109,6 +86,7 @@ const CanvasComp = ({ SetCName }) => {
       "a1",
     );
 
+
     tlS.to(".SempleIMGdiv", {
       opacity: 0,
       ease: "ease.Out",
@@ -128,9 +106,18 @@ const CanvasComp = ({ SetCName }) => {
           },
           "S1",
         );
-        startMouseTracking();
+        // startMouseTracking();
+        if (isMobile.current) {
+          startTouchDrag();
+        } else {
+          startMouseTracking();
+        }
       },
     });
+    tlS.to('.grid-cell', {
+      scale: 1.1,
+      ease: 'power1.out'
+    })
   }, []);
 
   // ---- Your Image Array (11 images) ----
@@ -139,7 +126,7 @@ const CanvasComp = ({ SetCName }) => {
     "/productImg/img2.jpg",
     "/productImg/img3.jpg",
     "/productImg/img4.jpg",
-    "/productImg/img5.jpg",
+    "/productImg/img6.jpg",
     "/productImg/img6.jpg",
     "/productImg/img7.jpg",
     "/productImg/img8.jpg",
@@ -155,7 +142,7 @@ const CanvasComp = ({ SetCName }) => {
     "/productImg/img2.jpg",
     "/productImg/img3.jpg",
     "/productImg/img4.jpg",
-    "/productImg/img5.jpg",
+    "/productImg/img6.jpg",
     "/productImg/img6.jpg",
     "/productImg/img7.jpg",
     "/productImg/img8.jpg",
@@ -171,7 +158,7 @@ const CanvasComp = ({ SetCName }) => {
     "/productImg/img2.jpg",
     "/productImg/img3.jpg",
     "/productImg/img4.jpg",
-    "/productImg/img5.jpg",
+    "/productImg/img6.jpg",
     "/productImg/img6.jpg",
     "/productImg/img7.jpg",
     "/productImg/img8.jpg",
@@ -189,6 +176,14 @@ const CanvasComp = ({ SetCName }) => {
 
   // ------------------------------------------------------
   const gridRef = useRef(null);
+
+  const isMobile = useRef(false);
+
+  useEffect(() => {
+    isMobile.current =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  }, []);
+
   // ------------------- Smooth Mouse Tracking ------------------- TRUE
 
   const startMouseTracking = () => {
@@ -234,7 +229,62 @@ const CanvasComp = ({ SetCName }) => {
     window.addEventListener("mousemove", onMouseMove);
   };
 
-  
+const startTouchDrag = () => {
+  const grid = gridRef.current;
+  if (!grid) return;
+
+  let startX = 0;
+  let startY = 0;
+  let currentX = 0;
+  let currentY = 0;
+  let isDragging = false;
+
+  // Get initial transform so it doesn't snap
+  const computedStyle = window.getComputedStyle(grid);
+  const matrix = new DOMMatrixReadOnly(computedStyle.transform);
+  currentX = matrix.m41 || 0;
+  currentY = matrix.m42 || 0;
+
+  const onTouchStart = (e) => {
+    isDragging = true;
+    startX = e.touches[0].clientX - currentX;
+    startY = e.touches[0].clientY - currentY;
+  };
+
+  const onTouchMove = (e) => {
+    if (!isDragging) return;
+
+    const touch = e.touches[0];
+
+    let x = touch.clientX - startX;
+    let y = touch.clientY - startY;
+
+    // Clamp movement so grid stays in bounds
+    const maxX = (grid.offsetWidth - window.innerWidth) / 2;
+    const maxY = (grid.offsetHeight - window.innerHeight) / 2;
+
+    x = Math.max(-maxX, Math.min(maxX, x));
+    y = Math.max(-maxY, Math.min(maxY, y));
+
+    currentX = x;
+    currentY = y;
+
+    gsap.set(grid, {
+      x: currentX,
+      y: currentY,
+    });
+  };
+
+  const onTouchEnd = () => {
+    isDragging = false;
+  };
+
+  grid.addEventListener("touchstart", onTouchStart, { passive: true });
+  grid.addEventListener("touchmove", onTouchMove, { passive: true });
+  grid.addEventListener("touchend", onTouchEnd);
+};
+
+
   //  ----------------------------------------------------------------------- TRUE
   const DivMouseEnter = (item) => {
     SetCName("Image Name");
@@ -264,7 +314,7 @@ const CanvasComp = ({ SetCName }) => {
       </Canvas>
 
       {/* Top Layer */}
-      <div className="w-full h-screen fixed top-0 left-0 z-80 overflow-hidden  flex justify-center items-center">
+      <div className="w-full  h-screen fixed top-0 left-0 z-80 overflow-hidden  flex justify-center items-center">
         <div className="w-[400px] h-[450px] max-lg:w-[250px] max-lg:h-[300px] z-100 SempleIMGdiv overflow-hidden pointer-events-none opacity-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
           <img
             src={`/productImg/img10.jpg`}
@@ -276,7 +326,7 @@ const CanvasComp = ({ SetCName }) => {
         {/* --- PERFECT SQUARE GRID 12x12 --- */}
         <div
           ref={gridRef}
-          className="w-[200vw] max-sm:w-[600vw] aspect-square grid grid-cols-15  mx-auto shrink-0 gap-[2rem] select-none"
+          className="touch-pan-x touch-pan-y will-change-transform w-[200vw] max-sm:w-[600vw] aspect-square grid grid-cols-15  mx-auto shrink-0 gap-[2rem] select-none"
         >
           {Array.from({ length: 15 * 15 }).map((_, i) => {
             const imgIndex = imagePositions.indexOf(i);

@@ -25,6 +25,17 @@ const NavBox = () => {
           ease: "power2.inOut",
         },
         "<",
+      )
+      .to(
+        ".NLW",
+        {
+          delay:0.1,
+          width:'100%',
+          duration: 0.5,
+          stagger:0.05,
+          ease: "power2.inOut",
+        },
+        "<",
       );
   }, []);
 
@@ -38,10 +49,20 @@ const NavBox = () => {
     tl.current.reverse();
   };
 
+  const [navSt, SetNavSt] = useState(false)
+  const Seter = () => {
+    if(navSt == true){
+      NavDeActivate()
+    }else{
+      NavActivate()
+    }
+  }
+
   return (
     <div
       onMouseEnter={NavActivate}
       onMouseLeave={NavDeActivate}
+      onClick={Seter}
       className="fixed top-4  left-1/2 -translate-x-1/2 z-100 cursor-pointer NBOX opacity-0 text-[14px]"
     >
       <div
@@ -53,25 +74,25 @@ const NavBox = () => {
         <div className="flex items-center max-sm:hidden justify-between mb-4 py-2 px-2">
           {/* ICON SWITCH */}
           {isOpen ? (
-            <RxCross2 className="text-[14px] text-[#5a3823]" />
+            <RxCross2  className="text-[14px] text-[#5a3823]" />
           ) : (
-            <FiMenu className="text-[14px] text-[#5a3823]" />
+            <FiMenu  className="text-[14px] text-[#5a3823]" />
           )}
           <p className="text-sm font-medium text-[#5a3823] Font1">Home</p>
           <div className="w-[20px]"></div>
         </div>
 
         {/* Top Row Mobile */}
-        <div className="flex items-center sm:hidden items-center justify-between mb-4 py-2 px-4">
+        <div  className="flex items-center sm:hidden items-center justify-between mb-4 py-2 px-4">
 
           <p className="text-sm font-medium text-[#5a3823] Font3"> ZERROR</p>
-          <div className="flex justify-center items-center gap-2">
+          <div  className="flex justify-center items-center gap-2">
             <p className="text-sm font-medium text-[#5a3823] Font1">Home</p>
             {/* ICON SWITCH */}
             {isOpen ? (
-              <RxCross2 className="text-[14px] text-[#5a3823]" />
+              <RxCross2  className="text-[14px] text-[#5a3823]" />
             ) : (
-              <FiMenu className="text-[14px] text-[#5a3823]" />
+              <FiMenu  className="text-[14px] text-[#5a3823]" />
             )}
             {/* <div className="w-[20px]"></div> */}
           </div>
@@ -87,9 +108,9 @@ const NavBox = () => {
           ].map((item, i) => (
             <div
               key={i}
-              className="border-b TT opacity-0 border-[#5a3823]/40 pb-1 group"
+              className="border-b TT opacity-0 border-[#5a3823]/40 pb-1 NLW group w-[0%]"
             >
-              <p className="font-serif italic text-[#5a3823] ">
+              <p className="font-serif italic text-[#5a3823] whitespace-nowrap ">
                 <span className="font-medium text-sm transition-all ease-in duration-200  group-hover:mr-[10px]">
                   ({item.num})
                 </span>{" "}

@@ -46,21 +46,6 @@ const SceneComp = () => {
       },
       "a1"
     );
-    // tl.to(startSize, {
-    //   width: endSize.width,
-    //   height: endSize.height,
-    //   duration: 0.5,
-    //   ease: 'ease.in',
-    //   onUpdate: () => {
-    //     mesh.geometry.dispose() // dispose previous geometry
-    //     mesh.geometry = new THREE.PlaneGeometry(
-    //       startSize.width,
-    //       startSize.height,
-    //       100,
-    //       100
-    //     )
-    // }
-    // },'a1')
 
     // Scale animation instead of geometry rebuild
     tl.to(
