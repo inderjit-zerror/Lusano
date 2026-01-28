@@ -229,63 +229,131 @@ const CanvasComp = ({ SetCName }) => {
     window.addEventListener("mousemove", onMouseMove);
   };
 
-const startTouchDrag = () => {
-  const grid = gridRef.current;
-  if (!grid) return;
+  // const startTouchDrag = () => {
+  //   const grid = gridRef.current;
+  //   if (!grid) return;
 
-  let startX = 0;
-  let startY = 0;
-  let currentX = 0;
-  let currentY = 0;
-  let isDragging = false;
+  //   let startX = 0;
+  //   let startY = 0;
+  //   let currentX = 0;
+  //   let currentY = 0;
+  //   let isDragging = false;
 
-  // Get initial transform so it doesn't snap
-  const computedStyle = window.getComputedStyle(grid);
-  const matrix = new DOMMatrixReadOnly(computedStyle.transform);
-  currentX = matrix.m41 || 0;
-  currentY = matrix.m42 || 0;
+  //   // Get initial transform so it doesn't snap
+  //   const computedStyle = window.getComputedStyle(grid);
+  //   const matrix = new DOMMatrixReadOnly(computedStyle.transform);
+  //   currentX = matrix.m41 || 0;
+  //   currentY = matrix.m42 || 0;
 
-  const onTouchStart = (e) => {
-    isDragging = true;
-    startX = e.touches[0].clientX - currentX;
-    startY = e.touches[0].clientY - currentY;
-  };
+  //   const onTouchStart = (e) => {
+  //     isDragging = true;
+  //     startX = e.touches[0].clientX - currentX;
+  //     startY = e.touches[0].clientY - currentY;
+  //   };
 
-  const onTouchMove = (e) => {
-    if (!isDragging) return;
+  //   const onTouchMove = (e) => {
+  //     if (!isDragging) return;
 
-    const touch = e.touches[0];
+  //     const touch = e.touches[0];
 
-    let x = touch.clientX - startX;
-    let y = touch.clientY - startY;
+  //     let x = touch.clientX - startX;
+  //     let y = touch.clientY - startY;
 
-    // Clamp movement so grid stays in bounds
-    const maxX = (grid.offsetWidth - window.innerWidth) / 2;
-    const maxY = (grid.offsetHeight - window.innerHeight) / 2;
+  //     // Clamp movement so grid stays in bounds
+  //     const maxX = (grid.offsetWidth - window.innerWidth) / 2;
+  //     const maxY = (grid.offsetHeight - window.innerHeight) / 2;
 
-    x = Math.max(-maxX, Math.min(maxX, x));
-    y = Math.max(-maxY, Math.min(maxY, y));
+  //     x = Math.max(-maxX, Math.min(maxX, x));
+  //     y = Math.max(-maxY, Math.min(maxY, y));
 
-    currentX = x;
-    currentY = y;
+  //     currentX = x;
+  //     currentY = y;
 
-    gsap.set(grid, {
-      x: currentX,
-      y: currentY,
-    });
-  };
+  //     gsap.set(grid, {
+  //       x: currentX,
+  //       y: currentY,
+  //     });
+  //   };
 
-  const onTouchEnd = () => {
-    isDragging = false;
-  };
+  //   const onTouchEnd = () => {
+  //     isDragging = false;
+  //   };
 
-  grid.addEventListener("touchstart", onTouchStart, { passive: true });
-  grid.addEventListener("touchmove", onTouchMove, { passive: true });
-  grid.addEventListener("touchend", onTouchEnd);
-};
+  //   grid.addEventListener("touchstart", onTouchStart, { passive: true });
+  //   grid.addEventListener("touchmove", onTouchMove, { passive: true });
+  //   grid.addEventListener("touchend", onTouchEnd);
+  // };
 
 
   //  ----------------------------------------------------------------------- TRUE
+
+  const startTouchDrag = () => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    let startX = 0;
+    let startY = 0;
+
+    const target = { x: 0, y: 0 };
+    const current = { x: 0, y: 0 };
+
+    let isDragging = false;
+
+    // Read existing transform (prevents snap)
+    const matrix = new DOMMatrixReadOnly(
+      window.getComputedStyle(grid).transform
+    );
+    target.x = current.x = matrix.m41 || 0;
+    target.y = current.y = matrix.m42 || 0;
+
+    const lerp = 0.1; // 👈 smoothness (lower = floaty, higher = tighter)
+
+    const animate = () => {
+      current.x += (target.x - current.x) * lerp;
+      current.y += (target.y - current.y) * lerp;
+
+      gsap.set(grid, {
+        x: current.x,
+        y: current.y,
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    const onTouchStart = (e) => {
+      isDragging = true;
+      startX = e.touches[0].clientX - target.x;
+      startY = e.touches[0].clientY - target.y;
+    };
+
+    const onTouchMove = (e) => {
+      if (!isDragging) return;
+
+      const touch = e.touches[0];
+
+      let x = touch.clientX - startX;
+      let y = touch.clientY - startY;
+
+      const maxX = (grid.offsetWidth - window.innerWidth) / 2;
+      const maxY = (grid.offsetHeight - window.innerHeight) / 2;
+
+      target.x = Math.max(-maxX, Math.min(maxX, x));
+      target.y = Math.max(-maxY, Math.min(maxY, y));
+    };
+
+    const onTouchEnd = () => {
+      isDragging = false;
+    };
+
+    grid.addEventListener("touchstart", onTouchStart, { passive: true });
+    grid.addEventListener("touchmove", onTouchMove, { passive: true });
+    grid.addEventListener("touchend", onTouchEnd);
+  };
+
+
+
   const DivMouseEnter = (item) => {
     SetCName("Image Name");
     gsap.to(item, {
